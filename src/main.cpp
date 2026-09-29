@@ -29,32 +29,40 @@ void handleInput(sf::Window& window, bool& shouldQuit) {
             window.close();
             shouldQuit = true;
         }
+        // ease in out cubic
         if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()){ // asked ChatGPT how to check for pressing number 1 key
             if (keyPressed ->code == sf::Keyboard::Key::Num2){
                 tween = [](float a, float b, float t) {
                     float easeInOutCubic = 1 -std::pow(1-t, 4);
                     return (1 - easeInOutCubic) * a + easeInOutCubic* b;
                 };
+            // ease in sine
             }else if (keyPressed ->code == sf::Keyboard::Key::Num3){
                 tween = [](float a, float b, float t) {
                     float easeInSine = 1-std::cos((t*3.141592)/2);
                     return (1 - easeInSine) * a + easeInSine* b;
                 };
+            // ease out sine
             }else if (keyPressed ->code == sf::Keyboard::Key::Num4){
                 tween = [](float a, float b, float t) {
                     float easeOutSine = std::sin((t*3.141592)/2);
                     return (1 - easeOutSine) * a + easeOutSine* b;
                 };
+            // ease in out cubic
             }else if (keyPressed ->code == sf::Keyboard::Key::Num5){
                 tween = [](float a, float b, float t) {
                     float easeInOutCubic = t < 0.5 ? 4 * t * t * t : 1 - std::pow(-2 * t + 2, 3) / 2;
                     return (1 - easeInOutCubic) * a + easeInOutCubic* b;
                 };
+            
+            // ease in expo
             }else if (keyPressed ->code == sf::Keyboard::Key::Num6){
                 tween = [](float a, float b, float t) {
                     float easeInExpo = t == 0 ? 0 : std::pow(2, 10 * t - 10);
                     return (1 - easeInExpo) * a + easeInExpo* b;
                 };
+            
+            // ease out bounce
             }else if (keyPressed ->code == sf::Keyboard::Key::Num7){
                 tween = [](float a, float b, float t) {
                     float easeOutBounce = t == 0 ? 0 : std::pow(2, 10 * t - 10);
@@ -73,6 +81,7 @@ void handleInput(sf::Window& window, bool& shouldQuit) {
                     
                     return (1 - easeOutBounce) * a + easeOutBounce* b;
                 };
+            // ease out elastic
             }else if (keyPressed ->code == sf::Keyboard::Key::Num8){
                 tween = [](float a, float b, float t) {
                     const double c4 = (2 *3.14159) / 3;
@@ -80,6 +89,7 @@ void handleInput(sf::Window& window, bool& shouldQuit) {
                     float easeOutElastic = t == 0 ?0 : t == 1? 1: std::pow(2, -10 * t) * std::sin((t * 10 - 0.75) * c4) + 1;
                     return (1 - easeOutElastic) * a + easeOutElastic* b;
                 };
+            // ease in back
             }else if (keyPressed ->code == sf::Keyboard::Key::Num9){
                 tween = [](float a, float b, float t) {
                     const double c1 = 1.70158;
@@ -89,6 +99,7 @@ void handleInput(sf::Window& window, bool& shouldQuit) {
 
                     return (1 - easeInBack) * a + easeInBack* b;
                 };
+            // tween
             }else if (keyPressed ->code == sf::Keyboard::Key::Num1){
                 tween = [](float a, float b, float t) {
                     return (1 - t) * a + t* b;
